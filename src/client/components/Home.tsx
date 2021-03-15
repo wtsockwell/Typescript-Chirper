@@ -35,6 +35,7 @@ const Home: React.FC<chirpsProps> = (props) => {
                     <li key={chirp.id}>
                         <h2>{chirp.username}</h2>
                         <p>{chirp.message}</p>
+                        <Link to={`/api/chirps/${chirp.id}/Admin`}>Admin Options</Link>
                     </li>
                 ))}
             </ul>

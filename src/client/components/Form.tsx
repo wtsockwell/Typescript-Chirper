@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
 
-interface Formprops { }
+interface Formprops {
+    history
+ }
 
 const Form: React.FC<Formprops> = ({history}) => {
     const [user, setUser] = useState("");
@@ -11,11 +13,11 @@ const Form: React.FC<Formprops> = ({history}) => {
         setUser(e.target.value)
     }
     
-    const handleMessage = (e: React.ChangeEvent<HTMLInputElement>) =>{
+    const handleMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) =>{
         setMessage(e.target.value)
     }
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) =>{
         e.preventDefault()
         sendChirp()
         document.getElementById('username').value=""
@@ -45,7 +47,7 @@ const Form: React.FC<Formprops> = ({history}) => {
         <div>
             <form>
                 <input type="text" name="" id="username" onChange={handleUser} value={user}/>
-                <textarea name="" id="message" cols="30" rows="10" onChange={handleMessage} value={message}></textarea>
+                <textarea name="" id="message" cols={30} rows={10} onChange={handleMessage} value={message}></textarea>
                 <button onClick={handleSubmit}>Submit</button>
             </form>
             <button onClick={handleReturn}>Go back</button>

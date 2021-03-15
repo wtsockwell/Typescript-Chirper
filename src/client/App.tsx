@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import Admin from './components/Admin';
 import Form from './components/Form';
 import Home from './components/Home'
 
@@ -11,6 +12,7 @@ const App = (props: AppProps) => {
 			<Switch>
 				<Route exact path="/" component={Home}/>
 				<Route exact path="/form" component={Form}/>
+				<Route exact path="/api/chirps/:id?/Admin" component={Admin}/>
 			</Switch>
 		</BrowserRouter>
 	);
