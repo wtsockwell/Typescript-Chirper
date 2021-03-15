@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 
 interface Formprops { }
 
-const Form: React.FC<Formprops> = (props) => {
+const Form: React.FC<Formprops> = ({history}) => {
     const [user, setUser] = useState("");
     const [message, setMessage] = useState("");
 
@@ -18,6 +18,13 @@ const Form: React.FC<Formprops> = (props) => {
     const handleSubmit = (e) =>{
         e.preventDefault()
         sendChirp()
+        document.getElementById('username').value=""
+        document.getElementById('message').value=""
+    }
+
+    const handleReturn = (e) =>{
+        e.preventDefault()
+        history.goBack()
     }
 
     const sendChirp = async () =>{
@@ -37,10 +44,11 @@ const Form: React.FC<Formprops> = (props) => {
     return (
         <div>
             <form>
-                <input type="text" name="" id="" onChange={handleUser}/>
-                <textarea name="" id="" cols="30" rows="10" onChange={handleMessage}></textarea>
+                <input type="text" name="" id="username" onChange={handleUser} value={user}/>
+                <textarea name="" id="message" cols="30" rows="10" onChange={handleMessage} value={message}></textarea>
                 <button onClick={handleSubmit}>Submit</button>
             </form>
+            <button onClick={handleReturn}>Go back</button>
         </div>
     )
 }

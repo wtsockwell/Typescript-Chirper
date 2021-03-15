@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
+import {Link} from 'react-router-dom'
 
 interface chirpsProps {}
 interface chirps {
@@ -18,12 +19,17 @@ const Home: React.FC<chirpsProps> = (props) => {
         setChirps(chirp)
     }
 
+    const handleClick= (e) =>{
+        e.preventDefault()
+
+    }
+
     useEffect(() => { getChirps(); }, [])
 
     return (
         <div>
             <h1>Home Page</h1>
-            {console.log(chirps)}
+            <Link to="/form">Make a new Post</Link>
             <ul>
                 {chirps.map(chirp => (
                     <li key={chirp.id}>
