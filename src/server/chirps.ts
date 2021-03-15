@@ -9,7 +9,19 @@ router.get('/:id?', (req,res)=>{
     if (id){
         res.send(chirpsStore.GetChirp(id))
     } else {
-        res.send(chirpsStore.GetChirps())
+        const chirps = chirpsStore.GetChirps()
+        delete chirps.nextid
+        const tempArr = Object.entries(chirps)
+        const chirpArr = tempArr.map(chirp =>{
+            const newChirp ={
+                id: chirp[0],
+                username: chirp[1].username,
+                message: chirp[1].message
+            }
+            return newChirp
+        })
+
+        res.send(chirpArr)
     }
 })
 

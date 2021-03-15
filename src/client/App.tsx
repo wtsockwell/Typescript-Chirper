@@ -1,21 +1,16 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import Form from './components/Form'
+import Form from './components/Form';
 import Home from './components/Home'
-
 
 const App = (props: AppProps) => {
 
 	return (
 		<BrowserRouter>
 			<Switch>
-				<Route exact path="/">
-					<Home />
-				</Route>
-				<Route exact path='/form'>
-					<Form />
-				</Route>
+				<Route exact path="/" component={Home}/>
+				<Route exact path="/form" component={Form}/>
 			</Switch>
 		</BrowserRouter>
 	);
