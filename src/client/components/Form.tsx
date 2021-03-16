@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
+import { RouteComponentProps } from 'react-router-dom'
 
-interface Formprops {
-    history
-}
+interface Formprops  extends RouteComponentProps { }
 
 const Form: React.FC<Formprops> = ({ history }) => {
     const [user, setUser] = useState("");
@@ -22,8 +21,6 @@ const Form: React.FC<Formprops> = ({ history }) => {
         sendChirp()
         setUser("")
         setMessage("")
-        document.getElementById('username').value = ""
-        document.getElementById('message').value = ""
     }
 
     const handleReturn = (e: React.FormEvent<HTMLButtonElement>) => {
