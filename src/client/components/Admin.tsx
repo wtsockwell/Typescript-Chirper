@@ -1,54 +1,59 @@
 import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
-export interface DetailsProps extends RouteComponentProps<{ id: string; }> { }
+export interface AdminProps extends RouteComponentProps<{ id: string; }> { }
 
-const Admin = ({ match: { params: { id } } }) => {
+const Admin: React.FC<AdminProps> = ({ history, match: { params: { id } } }) => {
 
-    const [user, setUser] = useState()
-    const [message, setMessage] = useState()
+    const [user, setUser] = useState("")
+    const [message, setMessage] = useState("")
 
     const getChirps = async () => {
-        let r = await fetch(`/api/chirps`)
+        let r = await fetch(`/api/chirps/${id}`)
         let chirp = await r.json()
-        setUser(chirp[id].username)
-        setMessage(chirp[id].message)
+        setUser(chirp.username)
+        setMessage(chirp.message)
     }
 
-    useEffect(()=>{getChirps()},[])
+    useEffect(() => {
+        getChirps()
 
-    const handleUser = (e) => {
+    }, [])
+
+    const handleUser = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser(e.target.value)
     }
-    const handleMessage = (e) => {
+    const handleMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(e.target.value)
     }
 
-    const handleEdit = (e) => {
+    const handleEdit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault()
         updateChirp()
+        history.goBack()
     }
-    const handleDelete = (e) => {
+    const handleDelete = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault()
         deleteChirp()
+        history.goBack()
     }
 
-    const updateChirp = () =>{
+    const updateChirp = () => {
         let chirp = {
             username: user,
             message: message
         }
-        let r = fetch(`/api/chirps/${id}`,{
+        let r = fetch(`/api/chirps/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body:JSON.stringify(chirp)
+            body: JSON.stringify(chirp)
         })
     }
 
-    const deleteChirp = () =>{
-        let r = fetch(`/api/chirps/${id}`,{
+    const deleteChirp = () => {
+        let r = fetch(`/api/chirps/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -59,11 +64,15 @@ const Admin = ({ match: { params: { id } } }) => {
     return (
         <div>
             <form>
-                <input type="text" name="" id="user" value={user} onChange={handleUser}/>
-                <textarea name="" id="message" cols="30" rows="10" value={message} onChange={handleMessage}></textarea>
+                <div className="container">
+                    <label htmlFor="user">Who're you?</label>
+                    <input type="text" name="" id="user" value={user} onChange={handleUser} className="form-control" />
+                    <label htmlFor="message" className="my-2">What'dya mess up?</label>
+                    <textarea name="" id="message" cols={30} rows={10} value={message} onChange={handleMessage} className="form-control my-2"></textarea>
+                    <button onClick={handleEdit} className="btn btn-info mx-1">Save</button>
+                    <button onClick={handleDelete} className="btn btn-danger mx-1">Delete</button>
+                </div>
             </form>
-            <button onClick={handleEdit}>Save</button>
-            <button onClick={handleDelete}>Delete</button>
         </div>
     )
 }

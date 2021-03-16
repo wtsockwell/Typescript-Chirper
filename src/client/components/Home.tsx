@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-interface chirpsProps {}
+interface chirpsProps { }
 interface chirps {
     id: number,
     username: string,
@@ -19,7 +19,7 @@ const Home: React.FC<chirpsProps> = (props) => {
         setChirps(chirp)
     }
 
-    const handleClick= (e) =>{
+    const handleClick = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault()
 
     }
@@ -28,17 +28,27 @@ const Home: React.FC<chirpsProps> = (props) => {
 
     return (
         <div>
-            <h1>Home Page</h1>
-            <Link to="/form">Make a new Post</Link>
-            <ul>
+            <div className="jumbostron d-flex align-items-center flex-column">
+                <h1 className="display-3">Home Page</h1>
+                <Link to="/form" className="btn btn-primary ">Make a new Post</Link>
+            </div>
+            <div className="container mt-3">
+
                 {chirps.map(chirp => (
-                    <li key={chirp.id}>
-                        <h2>{chirp.username}</h2>
-                        <p>{chirp.message}</p>
-                        <Link to={`/api/chirps/${chirp.id}/Admin`}>Admin Options</Link>
-                    </li>
+                    <div key={chirp.id} className="">
+                        <div className="card my-2">
+                            <div className="card-body">
+                                <h4 className="card-title">{chirp.username}</h4>
+                                <p className="card-text">
+                                    {chirp.message}
+                                </p>
+                                <Link to={`/api/chirps/${chirp.id}/Admin`} className="btn btn-primary float-right">Admin Options</Link>
+                            </div>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+
+            </div>
         </div>
     )
 }
